@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Footer from "@/components/footer/Footer";
 import FeaturedProducts from "@/components/home/FeaturedProducts";
 import FeaturesBar from "@/components/home/FeaturesBar";
@@ -14,6 +15,7 @@ export default function Page() {
   return (
     <main className="w-full overflow-x-hidden">
       <Hero />
+      <Link href="/shop"> Go to Shop Page</Link>
       <FeaturesBar />
       <ProductGrid />
       <ShopCategories />
