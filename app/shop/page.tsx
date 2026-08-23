@@ -1,9 +1,26 @@
- const ShopPage = () => {
+import Navbar from "@/components/navbar/Navbar";
+import MegaMenu from "@/components/shop/MegaMenu";
+import Hero from "@/components/home/Hero";
+import FastedDeliver from "@/components/shop/FastedDelivery";
+
+export default function ShopPage() {
   return (
-    <div>
-      <h1>Shop Page</h1>
-      <p>Welcome to page 2</p>
-    </div>
+    <main>
+
+      <div className="relative">
+
+        <div className="h-[760px] overflow-hidden">
+          <Hero />
+        </div>
+
+        <div className="absolute top-[-210px] right-[20px] z-40">
+          <MegaMenu />
+        </div>
+
+      </div>
+      <div>
+        <FastedDeliver />
+      </div>
+    </main>
   );
 }
-export default ShopPage;

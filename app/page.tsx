@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/footer/Footer";
 import FeaturedProducts from "@/components/home/FeaturedProducts";
 import FeaturesBar from "@/components/home/FeaturesBar";
@@ -14,6 +15,7 @@ import ShopCategories from "@/components/home/ShopCategories";
 export default function Page() {
   return (
     <main className="w-full overflow-x-hidden">
+      <Navbar />
       <Hero />
       <Link href="/shop"> Go to Shop Page</Link>
       <FeaturesBar />

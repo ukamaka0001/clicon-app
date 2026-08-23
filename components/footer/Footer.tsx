@@ -1,5 +1,5 @@
 import { SiSamsung } from "react-icons/si";
-import { FaGoogle } from "react-icons/fa";
+import { FaArrowRight, FaBars, FaGoogle } from "react-icons/fa";
 
 export default function Footer() {
   const brands = [
@@ -49,8 +49,18 @@ export default function Footer() {
 
         <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           <div>
+            <div className="flex items-center gap-3 mb-4">
+          <div className="size-12 bg-orange-600 rounded-full flex items-center justify-center">
+            <div className="size-6 rounded-full border-4 border-black bg-transparent"></div>
+          </div>
             <h2 className="text-3xl font-bold text-white mb-4">CLICON</h2>
-            <p className="text-gray-400 text-sm leading-relaxed"> Best electronics and gadget store with amazing deals and discounts. </p>
+            </div>
+            <div className="mt-4 space-y-2">
+               <p className="text-gray-400 text-sm"> Customer Supports:</p>
+               <h2 className="text-white font-bold text-xl">(629) 555-0129</h2>
+               <p className="text-gray-400 text-sm">4517 Washington Ave.</p>
+               <h4 className="text-white text-sm">info@Kinbo.com</h4>
+            </div>
           </div>
           <div>
             <h3 className="text-white font-semibold mb-4">Top Category</h3>
@@ -59,7 +69,14 @@ export default function Footer() {
               <li>Computer & Laptop</li>
               <li>SmartPhone</li>
               <li>Headphone</li>
-              <li>Accessories</li>
+              <li className="flex items-center gap-2 text-white">
+                <span className="w-6 h-[2px] bg-yellow-500"></span>
+                Accessories</li>
+                <li>camera & photo</li>
+                <li>TV & Homes</li>
+              <li className="flex items-center gap-2 text-yellow-500">Browse ALL Products
+                <FaArrowRight/>
+              </li>
             </ul>
           </div>
 
@@ -70,7 +87,10 @@ export default function Footer() {
               <li>Shop Product</li>
               <li>Shopping Cart</li>
               <li>Wishlist</li>
+              <li>Compare</li>
               <li>Track Order</li>
+              <li>Customer Help</li>
+              <li>About Us</li>
             </ul>
           </div>
           <div>

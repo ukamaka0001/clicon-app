@@ -1,75 +1,171 @@
-import { FaArrowRight, FaStar, FaHeart, FaShoppingCart, FaEye,} from "react-icons/fa";
+"use client";
+
+import ProductModal from "../product/ProductModal";
+import { useState } from "react";
+import { FaArrowRight, FaStar, FaHeart, FaShoppingCart, FaEye, } from "react-icons/fa";
 
 export default function FeaturedProducts() {
+  const [selectedProduct, setSelectedProduct] = useState<any>(null);
+
+  const addToCart = (product: any) => {
+  const cart = JSON.parse(
+    localStorage.getItem("cart") || "[]"
+  );
+
+  const existing = cart.find(
+    (item: any) => item.id === product.id
+  );
+
+  if (existing) {
+    existing.quantity += 1;
+  } else {
+    cart.push({
+      ...product,
+      quantity: 1,
+    });
+  }
+
+  localStorage.setItem(
+    "cart",
+    JSON.stringify(cart)
+  );
+
+  window.dispatchEvent(
+    new Event("cartUpdated")
+  );
+
+  alert("Added to cart!");
+};
+
+
+const addToWishlist = (product: any) => {
+  const wishlist = JSON.parse(
+    localStorage.getItem("wishlist") || "[]"
+  );
+
+  const exists = wishlist.find(
+    (item: any) => item.id === product.id
+  );
+
+  if (!exists) {
+    wishlist.push(product);
+
+    localStorage.setItem(
+      "wishlist",
+      JSON.stringify(wishlist)
+    );
+
+    window.dispatchEvent(
+      new Event("wishlistUpdated")
+    );
+
+    alert("Added to wishlist!");
+  } else {
+    alert("Already in wishlist!");
+  }
+};
+
+
+
   const products = [
     {
-      badge: "HOT",
-      badgeColor: "bg-orange-600",
-      image: "/images/Image-19.png",
-      desc: "TOZO T6 True wireless Earbuds Bluetooth headphones",
-      price: "$70",
-      rating: "(526)",
+       id: 1,
+       badge: "HOT",
+       badgeColor: "bg-orange-600",
+       image: "/images/Image-19.png",
+       name: "TOZO T6 True wireless Earbuds Bluetooth headphones",
+       price: 70,
+       oldPrice: 90,
+       discount: 22,
+       category: "Featured",
+       rating: "(526)",
     },
     {
+      id: 2,
       badge: "",
       badgeColor: "",
       image: "/images/Image-20.png",
-      desc: "Samsung Electronics Samsung Galaxy S21 5G",
-      price: "$2,300",
+      name: "Samsung Electronics Samsung Galaxy S21 5G",
+      price: 2300,
+      oldPrice: 2500,
+      discount: 20,
+      category: "Featured",
       rating: "(526)",
     },
     {
+      id: 3,
       badge: "BEST DEALS",
       badgeColor: "bg-blue-600",
       image: "/images/Image-21.png",
-      desc: "Amazon Basics High-speed HDMI Cable(18 Gbps, 4k/6)",
-      price: "$90",
+      name: "Amazon Basics High-speed HDMI Cable(18 Gbps, 4k/6)",
+      price: 90,
+      oldPrice: 100,
+      discount: 10,
+      category: "Featured",
       rating: "(526)",
     },
     {
+      id: 4,
       badge: "",
       badgeColor: "",
       image: "/images/Image23.png",
-      desc: "Portable Washing Machine, 11lbs capacity Model 18NMF",
-      price: "$80",
+      name: "Portable Washing Machine, 11lbs capacity Model 18NMF",
+      price: 80,
+      oldPrice: 110,
+      discount: 30,
+      category: "Featured",
       rating: "(526)",
     },
     {
-      
+      id: 5,
       badge: "",
       badgeColor: "",
       image: "/images/Image-25.png",
-      desc: "Wired Over-Ear Gaming Headphones with USB",
-      price: "$1,500",
+      name: "Wired Over-Ear Gaming Headphones with USB",
+      price: 1500,
+      oldPrice: 1800,
+      discount: 30,
+      category: "Featured",
       rating: "(526)",
     },
     
     {
+      id: 6,
       badge: "25% OFF",
       badgeColor: "bg-yellow-400",
       image: "/images/Image-18.png",
-      desc: "polariod 57-inch photo/video Tripod with Deluxe Tripod card",
-      oldPrice: "$1600",
-      price: "$1,200",
+      name: "polariod 57-inch photo/video Tripod with Deluxe Tripod card",
+      oldPrice: 1600,
+      price: 1200,
+      category: "Featured",
       rating: "(526)",
     },
     {
+      id: 7,
       image: "/images/Image-28.png",
-      desc: "Dell Optiplex 7000x7480 all-in-one Computer Monitor",
-      price: "$250",
+      name: "Dell Optiplex 7000x7480 all-in-one Computer Monitor",
+      price: 250,
+      oldPrice: 300,
+      discount: 5,
+      category: "Featured",
       rating: "(526)",
     },
     {
+      id: 8,
       badge: "SALE",
       badgeColor: "bg-green-400",
       image: "/images/Image-6.png",
-      desc: "4k UHD LED Smart Tv with chromecast Built-in",
-      price: "$220",
+      name: "4k UHD LED Smart Tv with chromecast Built-in",
+      price: 220,
+      oldPrice: 250,
+      discount: 30,
+      category: "Featured",
       rating: "(526)",
     },
   ];
 
   return (
+  <>
     <section className="max-w-7xl mx-auto px-4 py-12">
 
        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
@@ -118,7 +214,7 @@ export default function FeaturedProducts() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
 
             {products.map((product, i) => (
-              <div key={i} className="border border-gray-200 rounded-xl p-4 bg-white hover:shadow-lg transition relative w-full">
+              <div key={product.id} className="border border-gray-200 rounded-xl p-4 bg-white hover:shadow-lg transition relative w-full">
                 {product.badge && (
                   <span className={`${product.badgeColor} text-white text-xs px-2 py-1 rounded absolute top-3 left-3`} >
                     {product.badge}
@@ -126,20 +222,18 @@ export default function FeaturedProducts() {
                 )}
 
                 <div className="relative flex justify-center mb-4 mt-6">
-                  <img src={product.image} alt={product.desc} className="w-full max-w-[150px] h-[150px] object-contain" />
-                   {product.image === "/images/Image-28.png" && (
-                    <div className="absolute inset-0 bg-black/20 flex items-center justify-center gap-2 rounded-lg">
-                       <button className="bg-white p-2 rounded-full hover:bg-orange-500 hover:text-white transition">
-                         <FaHeart size={14} />
-                         </button>
-                       <button className="bg-orange-600 text-white p-2 rounded-full">
+                  <img src={product.image} alt={product.name} className="w-full max-w-[150px] h-[150px] object-contain" />
+                   <div className="absolute inset-0 bg-black/20 flex items-center justify-center gap-2 rounded-lg">
+                       <button onClick={() => addToWishlist(product)} className="bg-white p-2 rounded-full hover:bg-orange-500 hover:text-white transition">
+                          <FaHeart size={14}/>
+                        </button>
+                       <button onClick={() => addToCart(product)} className="bg-orange-600 text-white p-2 rounded-full">
                         <FaShoppingCart size={14} />
                         </button>
-                        <button className="bg-white p-2 rounded-full hover:bg-orange-500 hover:text-white transition">
-                           <FaEye size={14} />
-                           </button>
+                        <button onClick={() => setSelectedProduct(product)} className="bg-white p-2 rounded-full hover:bg-orange-500 hover:text-white transition">
+                         <FaEye size={14}/>
+                        </button>
                      </div>
-                    )}
                   </div>
                   <div className="flex items-center gap-1 text-yellow-400 mb-2 text-xs">
                   <FaStar />
@@ -150,18 +244,27 @@ export default function FeaturedProducts() {
                   <span className="text-gray-500 ml-1"> {product.rating || "(736)"}</span>
                 </div>
                 <h3 className="text-sm font-medium mb-3 line-clamp-2">
-                  {product.desc}
+                  {product.name}
                 </h3>
                 <div className="flex items-center gap-2">{product.oldPrice && (
-                <span className="text-gray-400 line-through text-sm"> {product.oldPrice}</span>
+                <span className="text-gray-400 line-through text-sm">${product.oldPrice?.toLocaleString()}</span>
                 )}
-                <p className="text-blue-600 font-bold">{product.price}</p>
+                <p className="text-blue-600 font-bold">${product.price.toLocaleString()}</p>
                 </div>
               </div>
              ))}
               </div>
               </div>
               </div>
+
               </section>
-               );
-               }
+
+           {selectedProduct && (
+             <ProductModal
+           product={selectedProduct}
+          closeModal={() => setSelectedProduct(null)} />
+           )}
+
+           </>
+          ); 
+        }

@@ -1,55 +1,104 @@
+"use client";
+
 import { FaEye, FaHeart, FaShoppingCart, FaStar } from "react-icons/fa";
 
 export default function ProductGrid() {
   const products = [
     {
+      id: 1,
       price: 2300,
       image: "/images/Image-3.png",
       badge: "sold out",
-      desc: "Sony DSCHX8 High Zoom Point & Shoot camera",
+      name: "Sony DSCHX8 High Zoom Point & Shoot camera",
     },
     {
+      id: 2,
       price: 220,
       image: "/images/Image-6.png",
-      desc: "simple mobile 4G LTE prepaid smartphone",
+      name: "simple mobile 4G LTE prepaid smartphone",
     },
     {
+      id: 3,
       oldPrice: 865,
       price: 300,
       image: "/images/Image-2.png",
       badge: "19% OFF",
-      desc: "4K UHD LED Smart TV with Chromecast Built-in",
+      name: "4K UHD LED Smart TV with Chromecast Built-in",
     },
     {
+      id: 4,
       price: 1200,
       image: "/images/Image-23.png",
-      desc: "Bose sport Earbuds-Wireless Earphones-Bluetooth in Ear",
+      name: "Bose sport Earbuds-Wireless Earphones-Bluetooth in Ear",
     },
     {
+      id: 5,
       price: 299,
       image: "/images/Image-20.png",
-      desc: "Dell Optiplex 7000x7480 All-in-one Computer Monitor",
+      name: "Dell Optiplex 7000x7480 All-in-one Computer Monitor",
     },
     {
+      id: 6,
       oldPrice: 865.99,
       price: 70,
       image: "/images/Image-25.png",
-      desc: "Portable Washing machine, 11lbs capacity Model 18NMFIAM",
+      name: "Portable Washing machine, 11lbs capacity Model 18NMFIAM",
     },
     {
+      id: 7,
       price: 160,
       image: "/images/Image-10.png",
       badge: "HOT",
-      desc: "2-Barrel Carburetor Carb 2100 Engine Increase Horsepower",
+      name: "2-Barrel Carburetor Carb 2100 Engine Increase Horsepower",
     },
-    {
+    { 
+      id: 8,
       oldPrice:360,
       price: 250,
       image: "/images/Image-11.png",
       badge: "32% OFF",
-      desc: "JBL FLIP 4-Waterproof portable Bluetooth speaker-black",
+      name: "JBL FLIP 4-Waterproof portable Bluetooth speaker-black",
     },
   ];
+
+  const addToCart = (product: any) => {
+  const cart = JSON.parse(
+    localStorage.getItem("cart") || "[]"
+  );
+
+  const existing = cart.find(
+    (item: any) => item.id === product.id
+  );
+
+  if (existing) {
+    existing.quantity += 1;
+  } else {
+    cart.push({
+      ...product,
+      quantity: 1,
+    });
+  }
+
+  localStorage.setItem(
+    "cart",
+    JSON.stringify(cart)
+  );
+
+  window.dispatchEvent(
+    new Event("cartUpdated")
+  );
+
+  alert("Added to cart!");
+};
+    
+ const featuredProduct = {
+  id: 0,
+  name: "...",
+  price: 442.12,
+  oldPrice: 865.99,
+  image: "/images/Image-1.png",
+};
+   
 
   return (
     <section className="max-w-7xl mx-auto px-4 py-10">
@@ -96,9 +145,11 @@ export default function ProductGrid() {
             <button className="bg-orange-300 text-black px-4 py-3">
               <FaHeart />
             </button>
-            <button className="bg-orange-500 hover:bg-orange-600 text-white flex items-center py-2  px-17 gap-2 font-medium">
+            <button
+              onClick={() => addToCart(featuredProduct)}
+               className="bg-orange-500 hover:bg-orange-600 text-white flex items-center py-2 px-17 gap-2 font-medium">
               <FaShoppingCart />
-              Add to Cart
+               Add to Cart
             </button>
             <button className="bg-orange-300 text-black px-4 py-3">
               <FaEye />
@@ -106,7 +157,7 @@ export default function ProductGrid() {
           </div>
         </div>
        {products.map((product, i) => (
-         <div key={i} className="relative bg-white p-4 border border-gray-200 flex flex-col" >
+         <div key={product.id} className="relative bg-white p-4 border border-gray-200 flex flex-col" >
 
         {product.badge && (
           <span className={` text-xs text-white px-2 py-1 w-fit mb-3 rounded
@@ -125,10 +176,9 @@ export default function ProductGrid() {
       </span>
     )}
     <div className="relative w-full max-w-[170px] h-[160px] mx-auto mb-4">
-       <img src={product.image} alt={product.desc} className="w-full h-full object-contain"/>
+       <img src={product.image} alt={product.name} className="w-full h-full object-contain"/>
 
-       {i === 3 && (
-        <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+       <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition">
       
         <div className="flex gap-3 -translate-y-1">
 
@@ -136,9 +186,9 @@ export default function ProductGrid() {
           <FaHeart size={14} />
         </button>
 
-        <button className="bg-white p-2 rounded-full hover:bg-orange-500 hover:text-white transition">
-          <FaShoppingCart size={14} />
-        </button>
+       <button onClick={() => addToCart(product)} className="bg-white p-2 rounded-full hover:bg-orange-500 hover:text-white transition">
+         <FaShoppingCart size={14} />
+       </button>
 
         <button className="bg-white p-2 rounded-full hover:bg-orange-500 hover:text-white transition">
           <FaEye size={14} />
@@ -147,11 +197,10 @@ export default function ProductGrid() {
       </div>
 
     </div>
-  )}
 
 </div>
     <h3 className="text-sm font-semibold line-clamp-2">
-      {product.desc}
+      {product.name}
     </h3>
     <div className="flex items-center gap-2 mt-auto">
       {product.oldPrice && (

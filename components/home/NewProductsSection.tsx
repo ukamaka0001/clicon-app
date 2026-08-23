@@ -53,7 +53,7 @@ export default function NewProductsSection() {
     { 
       badge: "25% OFF",
       badgeColor: "bg-yellow-400",
-      image: "/images/Image-1.png",
+      image: "/images/Image-45.png",
       desc: "Portable Washing Machine 4K UHD Smart TV",
       oldPrice: "$1600",
       price: "$1,200",
